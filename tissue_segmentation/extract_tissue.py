@@ -186,7 +186,7 @@ def plot_extraction(slide,patch_size=224,res=20,min_cc_size=10,max_ratio_size=10
     else:
         plt.show()
 
-def save_mask(slide, patch_size=224, res=20., min_cc_size=10, bmp=None):
+def save_mask(slide, patch_size=224, res=20., min_cc_size=10, erode=False, bmp=None):
 
     # maxres = float(slide.properties[openslide.PROPERTY_NAME_OBJECTIVE_POWER])
     maxres = res
@@ -203,9 +203,11 @@ def save_mask(slide, patch_size=224, res=20., min_cc_size=10, bmp=None):
     img = filter_regions(img, min_cc_size, 10.0)
     img[img > 0] = 1
     img = skimage.morphology.binary_dilation(img)
+    img = skimage.morphology.binary_dilation(img)
+    img = skimage.morphology.binary_dilation(img)
     #img = skimage.morphology.binary_dilation(img)
-    #img = skimage.morphology.binary_dilation(img)
-    #img = skimage.morphology.binary_dilation(img)
+    if erode==True:
+        img = skimage.morphology.binary_erosion(img)
 
     slide_dimensions = slide.level_dimensions[0]
     tissue_excluding_marker = cv2.resize(img.astype(np.float32), slide_dimensions)

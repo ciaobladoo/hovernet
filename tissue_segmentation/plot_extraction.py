@@ -4,12 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from argparse import ArgumentParser
-os.add_dll_directory("C:/Users/chfe/Documents/tools/openslide-win64-20230414/bin")
 import openslide
 import extract_tissue
 
-SIZE = 256
-MAG = 20
+SIZE = 512
+MAG = 40
 
 parser = ArgumentParser()
 parser.add_argument("slide", type=str)
@@ -18,7 +17,7 @@ args = parser.parse_args()
 
 
 slide = openslide.OpenSlide(args.slide)
-grid,_ = extract_tissue.make_sample_grid(slide, patch_size=SIZE, res=MAG, min_cc_size=0, erode=True)
+grid,_ = extract_tissue.make_sample_grid(slide, patch_size=SIZE, res=MAG, min_cc_size=10, erode=True)
 thumb = slide.get_thumbnail((np.round(slide.dimensions[0]/50.), np.round(slide.dimensions[1]/50.)))
 
 ps = []

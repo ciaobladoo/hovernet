@@ -6,7 +6,6 @@ from skimage import color
 import re
 import subprocess
 import os
-os.add_dll_directory('C:/Users/chfe/Documents/tools/openslide-win64-20230414/bin')
 import openslide
 
 
